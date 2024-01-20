@@ -3,6 +3,16 @@ import esphome.config_validation as cv
 from esphome.components import binary_sensor
 from . import ToshibaUART, CONF_TOSHIBAUART_ID
 
+from esphome.const import (
+    ICON_HEATING_COIL
+)
+
+ICON_HEAT_PUMP_O = "mdi:heat-pump-outline"
+ICON_HEAT_PUMP = "mdi:heat-pump"
+ICON_HVAC = "mdi:hvac"
+ICON_BOILER = "mdi:water-boiler"
+ICON_RADIATOR = "mdi:radiator"
+
 CONF_PUMP_ONOFF = "pump_onoff"
 CONF_HEAT_PUMP_HEATING =     "heat_pump_heating"
 CONF_HEAT_RESISTOR_HEATING =     "heat_resistor_heating"
@@ -25,27 +35,34 @@ CONFIG_SCHEMA = cv.All(
     cv.Schema(
         {
             cv.GenerateID(CONF_TOSHIBAUART_ID): cv.use_id(ToshibaUART),
-            cv.Optional(
-                CONF_PUMP_ONOFF
-            ): binary_sensor.binary_sensor_schema(),
-            cv.Optional(
-                CONF_HEAT_PUMP_HEATING
-            ): binary_sensor.binary_sensor_schema(),
-            cv.Optional(
-                CONF_HEAT_RESISTOR_HEATING
-            ): binary_sensor.binary_sensor_schema(),
-            cv.Optional(
-                CONF_HEAT_PUMP_ONOFF
-            ): binary_sensor.binary_sensor_schema(),
-            cv.Optional(
-                CONF_HOTWATER_PUMP_HEATING
-            ): binary_sensor.binary_sensor_schema(),
-            cv.Optional(
-                CONF_HOTWATER_RESISTOR_HEATING
-            ): binary_sensor.binary_sensor_schema(),
-            cv.Optional(
-                CONF_HOTWATER_PUMP_ONOFF
-            ): binary_sensor.binary_sensor_schema(),
+            cv.Optional(CONF_PUMP_ONOFF): binary_sensor.binary_sensor_schema(
+                icon=ICON_HEAT_PUMP_O
+                
+            ),
+            cv.Optional(CONF_HEAT_PUMP_HEATING): binary_sensor.binary_sensor_schema(
+                icon=ICON_HVAC
+
+            ),
+            cv.Optional(CONF_HEAT_RESISTOR_HEATING): binary_sensor.binary_sensor_schema(
+                icon=ICON_HEATING_COIL
+
+            ),
+            cv.Optional(CONF_HEAT_PUMP_ONOFF): binary_sensor.binary_sensor_schema(
+                icon=ICON_RADIATOR
+
+            ),
+            cv.Optional(CONF_HOTWATER_PUMP_HEATING): binary_sensor.binary_sensor_schema(
+                icon=ICON_HEAT_PUMP
+
+            ),
+            cv.Optional(CONF_HOTWATER_RESISTOR_HEATING): binary_sensor.binary_sensor_schema(
+                icon=ICON_HEATING_COIL
+
+            ),
+            cv.Optional(CONF_HOTWATER_PUMP_ONOFF): binary_sensor.binary_sensor_schema(
+                icon=ICON_BOILER
+
+            ),
         }
     ).extend(cv.COMPONENT_SCHEMA)
 )
