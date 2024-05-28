@@ -16,6 +16,9 @@ Much more information could be pulled out of the pump and many features could be
 Feel free to add missing features and make pull requests. 
 I might add the cooling switch at least when it gets too hot in here :D
 
+You can first use the UART part only to see the RAW HEX UART communication to verify that your pump speaks the same language.
+If the pump receives unknown messages there will be some kind of error message in the header and I think some of the heating/cooling capabilities are turned off.
+
 ## Hardware
 
 Look above for the link to the hardware controller board.
@@ -51,6 +54,7 @@ Only those that are in the example are finished.
  2. Complete all the request data entries. Now only few are supported.
  3. Add all other basic functionalities. Most importantly, turn on cooling.
  4. UART throttles some times (From ESPHome logs). I don't know why, but maybe needs a fix.
+ 5. Could switch this controller to work as a secondary remote. Might be bothersome to decode the handshake (logged in the `logs_from_uart` file).
 
 
 ## Log captures by me
@@ -61,6 +65,7 @@ Could provide valuable information for extra functions.
 
 ## ESPHome example
 
+Uncomment the last three lines to get raw UART logging from ESPHome.
 
 ```yaml
 external_components:
