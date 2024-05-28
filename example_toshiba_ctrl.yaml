@@ -1,0 +1,77 @@
+external_components:
+  - source:
+      type: local
+      path: components
+    components: [ToshibaUART]
+
+ToshibaUART:
+  update_interval: 20s
+  id: toshibauart
+
+binary_sensor:
+  - platform: ToshibaUART
+    pump_onoff:
+      name: "Toshiba Pump On/Off"
+      id: pump_onoff
+    heat_pump_heating:
+      id: heat_pump_heating
+      name: "Heat Pumping"
+    heat_resistor_heating:
+      id: heat_resistor_heating
+      name: "Heating with Coil"
+    hotwater_pump_heating:
+      id: hotwater_pump_heating
+      name: "Hotwater heat pumping"
+    hotwater_resistor_heating:
+      id: hotwater_resistor_heating
+      name: "Hotwater Coil heating"
+
+sensor:
+  - platform: ToshibaUART
+    zone1_water_temp:
+      name: "Zone 1 water temperature"
+      id: zone1_water_temp
+    outside_air_temp:
+      name: "Toshiba - Outdoor ambient temperature"
+      id: outside_air_temp
+    oudoor_unit_current:
+      name: "Toshiba - Outdoor unit current"
+      id: oudoor_unit_current
+    heating_compressor_uptime:
+      name: "Toshiba - Heating compressor uptime"
+      id: heating_compressor_uptime
+
+number:
+  - platform: ToshibaUART
+    zone1_target_temp:
+      name: "Zone 1 target temperature"
+      mode: box
+    hotwater_target_temp:
+      name: "Hotwater target temperature"
+      mode: box
+
+
+switch:
+  - platform: ToshibaUART
+    zone1_switch:
+      name: "Toshiba - Zone 1"
+    hotwater_switch:
+      name: "Toshiba - Hotwater"
+    auto_mode_switch:
+      name: "Toshiba - Auto Mode"
+
+uart:
+  id: uart_bus
+  tx_pin: 
+    number: D8
+    inverted: False
+  rx_pin: 
+    number: D7
+    inverted: False
+  baud_rate: 2400
+  rx_buffer_size: 2048
+  stop_bits: 1
+  parity: NONE
+#  debug:
+#    direction: BOTH
+#    dummy_receiver: true

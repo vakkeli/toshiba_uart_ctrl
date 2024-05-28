@@ -13,14 +13,15 @@ from esphome.const import (
 
 ICON_BOILER = "mdi:water-boiler"
 ICON_HOME_THERMOMETER = "mdi:home-thermometer"
+ICON_AUTO_THERMOMETER = "mdi:thermometer-auto"
 
 Zone1Switch = toshiba_uart_ns.class_("Zone1Switch", switch.Switch, cg.Component)
-# AutoModeSwitch = toshiba_uart_ns.class_("AutoModeSwitch", switch.Switch, cg.Component)
+AutoModeSwitch = toshiba_uart_ns.class_("AutoModeSwitch", switch.Switch, cg.Component)
 HotwaterSwitch = toshiba_uart_ns.class_("HotwaterSwitch", switch.Switch, cg.Component)
 # CoolingSwitch = toshiba_uart_ns.class_("CoolingSwitch", switch.Switch, cg.Component)
 
 CONF_ZONE1_SWITCH     = "zone1_switch"
-# CONF_AUTOMODE_SWITCH   = "automode_switch"
+CONF_AUTO_MODE_SWITCH   = "auto_mode_switch"
 CONF_HOTWATER_SWITCH   = "hotwater_switch"
 # CONF_COOLING_SWITCH    = "cooling_switch"
 
@@ -45,6 +46,12 @@ CONFIG_SCHEMA = cv.All(
             #entity_category=ENTITY_CATEGORY_CONFIG,
             icon=ICON_BOILER,
         ),
+        cv.Optional(CONF_AUTO_MODE_SWITCH): switch.switch_schema(
+            AutoModeSwitch,
+            device_class=DEVICE_CLASS_SWITCH,
+            #entity_category=ENTITY_CATEGORY_CONFIG,
+            icon=ICON_AUTO_THERMOMETER,
+        ),
         }
     ).extend(cv.COMPONENT_SCHEMA)
 )
@@ -59,3 +66,7 @@ async def to_code(config):
         s = await switch.new_switch(hotwater_config)
         await cg.register_parented(s, config[CONF_TOSHIBAUART_ID])
         cg.add(ToshibaUART.set_hotwater_switch_switch(s))
+    if auto_mode_config := config.get(CONF_AUTO_MODE_SWITCH):
+        s = await switch.new_switch(auto_mode_config)
+        await cg.register_parented(s, config[CONF_TOSHIBAUART_ID])
+        cg.add(ToshibaUART.set_auto_mode_switch_switch(s))
